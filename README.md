@@ -12,7 +12,7 @@ A simple plugin to allow media utility in blueprints using FFmpeg.
 
 You can use this async blueprint to retrive data from a file.
 
-You can also see more in depth info in the log that you can find at: "Project\Saved\FFmpeg\GetMediaData.txt"
+You can also see more in depth info in the log of the last execution of the node that you can find at: "Project\Saved\FFmpeg\GetMediaData.txt"
 
 
 
