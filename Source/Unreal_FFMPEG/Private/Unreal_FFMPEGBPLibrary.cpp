@@ -11,14 +11,17 @@ UUnreal_FFMPEGBPLibrary::UUnreal_FFMPEGBPLibrary(const FObjectInitializer& Objec
 
 }
 
+// Function to get the content directory of the plugin
 FString GetPluginContentDir()
 {
     TSharedPtr<IPlugin> Plugin = IPluginManager::Get().FindPlugin(TEXT("Unreal_FFMPEG"));
     return Plugin->GetContentDir();
 }
 
+// Function to extract media information from the file
 FFmpegInfo ExtractMediaInfo(const FString& FilePath)
 {
+    // Initialize the media information struct
     FFmpegInfo MediaInfo;
 
     FString FileContent;
@@ -98,7 +101,7 @@ FFmpegInfo ExtractMediaInfo(const FString& FilePath)
             int32 EnumIndex = EnumPtr->GetIndexByNameString(videoEncoder);
             if (EnumIndex != INDEX_NONE)
             {
-                MediaInfo.Encoder = static_cast<ECodec>(EnumIndex);
+                MediaInfo.Codec = static_cast<ECodec>(EnumIndex);
             }
         }
 
@@ -120,7 +123,7 @@ FFmpegInfo ExtractMediaInfo(const FString& FilePath)
     return MediaInfo;
 }
 
-
+// Function to create a folder if it doesn't exist
 void CreateFolderIfNotExists(const FString& FolderPath)
 {
 	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
@@ -293,8 +296,7 @@ void UUnreal_FFMPEGBPLibrary::Media_Conversion(FString Input_video_path, FString
 
     FFmpegCommand = SettingsString;
 
-
-
+    // Asynchronous task to execute FFmpeg command
     AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [Completed, SettingsString]()
         {
 
@@ -306,11 +308,13 @@ void UUnreal_FFMPEGBPLibrary::Media_Conversion(FString Input_video_path, FString
             {
                 int PrimesFound = 0;
 
+                // Wait for the process to finish
                 while (FPlatformProcess::IsProcRunning(ProcessHandle))
                 {
                     //Waiting
                 }
 
+                // Call the Completed delegate on the GameThread
                 AsyncTask(ENamedThreads::GameThread, [Completed]()
                     {
                         Completed.ExecuteIfBound();
@@ -320,31 +324,40 @@ void UUnreal_FFMPEGBPLibrary::Media_Conversion(FString Input_video_path, FString
         });
 }
 
+// Function to get media information from the file
 void UUnreal_FFMPEGBPLibrary::Get_Media_Info(FString Input_video_path, FGetInfoDelegate Completed)
 {
+    // Asynchronous task to extract media information from the file
     AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [Completed, Input_video_path]()
         {
+            // Create a folder to store the temporary output file
+
             FString FolderPath = FPaths::ProjectSavedDir() + TEXT("/FFmpeg/");
 
             CreateFolderIfNotExists(FolderPath);
 
             FolderPath = FolderPath + TEXT("GetMediaData.txt");
 
+            // Command to run FFmpeg and redirect the output to the temporary file
             FString CmdString = FString::Printf(TEXT("/c ffmpeg -i \"%s\" > \"%s\" 2>&1"), *Input_video_path, *FolderPath);
 
+            // Create the process and execute the command
             FProcHandle ProcessHandle = FPlatformProcess::CreateProc(TEXT("cmd.exe"), *CmdString, false, false, true, nullptr, 0, *GetPluginContentDir(), nullptr);
 
             if (ProcessHandle.IsValid())
             {
                 int PrimesFound = 0;
 
+                // Wait for the process to finish
                 while (FPlatformProcess::IsProcRunning(ProcessHandle))
                 {
                     //Waiting
                 }
 
+                // Extract media information from the temporary output file
                 FFmpegInfo Info = ExtractMediaInfo(FolderPath);
 
+                // Call the Completed delegate on the GameThread and pass the media information
                 AsyncTask(ENamedThreads::GameThread, [Completed, Info]()
                     {
                         Completed.ExecuteIfBound(Info);
