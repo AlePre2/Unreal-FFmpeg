@@ -4,7 +4,7 @@ A simple plugin to allow media utility in blueprints using FFmpeg.
 
 Uneral version: 5.2
 
-Currently this plugin does not work in the pakage.
+This plugin works in package but requires FFmpeg to be installed on your PC: For more look in the "Tecnical Info" section.
 
 ## Blueprints
 
