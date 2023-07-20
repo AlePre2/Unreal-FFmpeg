@@ -9,6 +9,8 @@ A simple plugin to allow media utility in blueprints using FFmpeg.
 
 You can use this async blueprint to modify a media creating a new file.
 
+The blueprint is able to convert the media to a new extension for example from "mp4" to "avi"
+
 ### Get media info
 ![image](https://github.com/AlePre2/Unreal-FFmpeg/assets/56503173/f82bbc8b-a18a-4420-87c3-1d4e003b97a8)
 
