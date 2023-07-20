@@ -2,6 +2,8 @@
 
 A simple plugin to allow media utility in blueprints using FFmpeg.
 
+Uneral version: 5.2
+
 ## Blueprints
 
 ### Media conversion
