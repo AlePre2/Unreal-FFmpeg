@@ -18,8 +18,6 @@ You can use this async blueprint to retrive data from a file.
 
 You can also see more in depth info in the log of the last execution of the node that you can find at: "Project\Saved\FFmpeg\GetMediaData.txt"
 
-
-
 ## Contributing
 
 Pull requests are welcome.
@@ -28,6 +26,15 @@ Do not hesitate to contribute to the project.
 
 If you would like some feature not currently present you can request it and maybe it will be implemented in the future.
 
+## Tecnical Info
+
+This plugin at the moment works only on windows.
+
+This plugin use the Windows CMD.
+
+This plugin uses FFmpeg 6.0 it has the ffmpeg.exe in the content folder so you do not have to have it installed to make the plugin work.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
