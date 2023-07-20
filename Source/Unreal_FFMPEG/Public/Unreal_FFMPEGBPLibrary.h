@@ -57,26 +57,37 @@ struct FFmpegSettings
     GENERATED_BODY()
 
 public:
+    FFmpegSettings()
+        : Codec(ECodec::Copy),
+        Speed(-1.0f),
+        Resolution(F2DInt()),
+        Media_Start(-1.0f),
+        Media_End(-1.0f),
+        Bit_Rate(FFmpegBitrate()),
+        GOP_Size(-1.0f)
+    {
+    }
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Set processing codec"))
         ECodec Codec;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Set speed multiplier (Min 0.5 Max 100) (-1 Keep the same)"))
-        float Speed = -1;
+        float Speed;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Video resolution (If one or more of the 2 is -1 it will not change)"))
         F2DInt Resolution;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Clip start at (-1 Keep the same)"))
-        float Media_Start = -1;
+        float Media_Start;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Clip end at (-1 Keep the same)"))
-        float Media_End = -1;
+        float Media_End;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Bitrate (Min 1000)"))
         FFmpegBitrate Bit_Rate;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Set GOP Size"))
-        float GOP_Size = -1;
+        float GOP_Size;
 };
 
 // Struct for FFmpeg media information
@@ -86,6 +97,18 @@ struct FFmpegInfo
     GENERATED_BODY()
 
 public:
+    FFmpegInfo()
+        : Extenstion(TEXT("")),
+        Duration(FTimespan::Zero()),
+        Start(0.0f),
+        Bitrate_kbs(0.0f),
+        Resolution(F2DInt()),
+        Codec(ECodec::Copy),
+        FPS(0.0f),
+        Audio_HZ(0.0f)
+    {
+    }
+
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "File Extension"))
         FString Extenstion;
 
@@ -102,7 +125,7 @@ public:
         F2DInt Resolution;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Codec"))
-        ECodec Codec = ECodec::Copy;
+        ECodec Codec;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Video FPS"))
         float FPS;
@@ -110,6 +133,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Audio Hz"))
         float Audio_HZ;
 };
+
 
 // Delegate for Get_Media_Info function
 DECLARE_DYNAMIC_DELEGATE_OneParam(FGetInfoDelegate, const FFmpegInfo&, Info);
