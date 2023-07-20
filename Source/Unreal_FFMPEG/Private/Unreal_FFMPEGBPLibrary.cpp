@@ -299,10 +299,16 @@ void UUnreal_FFMPEGBPLibrary::Media_Conversion(FString Input_video_path, FString
     // Asynchronous task to execute FFmpeg command
     AsyncTask(ENamedThreads::AnyHiPriThreadNormalTask, [Completed, SettingsString]()
         {
-
             FString CmdString = FString::Printf(TEXT("/c %s"), *SettingsString);
 
+#if WITH_EDITOR
             FProcHandle ProcessHandle = FPlatformProcess::CreateProc(TEXT("cmd.exe"), *CmdString, false, false, true, nullptr, 0, *GetPluginContentDir(), nullptr);
+
+#else
+            FProcHandle ProcessHandle = FPlatformProcess::CreateProc(TEXT("cmd.exe"), *CmdString, false, false, true, nullptr, 0, nullptr, nullptr);
+#endif
+
+           
 
             if (ProcessHandle.IsValid())
             {
@@ -341,8 +347,12 @@ void UUnreal_FFMPEGBPLibrary::Get_Media_Info(FString Input_video_path, FGetInfoD
             // Command to run FFmpeg and redirect the output to the temporary file
             FString CmdString = FString::Printf(TEXT("/c ffmpeg -i \"%s\" > \"%s\" 2>&1"), *Input_video_path, *FolderPath);
 
-            // Create the process and execute the command
+#if WITH_EDITOR
             FProcHandle ProcessHandle = FPlatformProcess::CreateProc(TEXT("cmd.exe"), *CmdString, false, false, true, nullptr, 0, *GetPluginContentDir(), nullptr);
+
+#else
+            FProcHandle ProcessHandle = FPlatformProcess::CreateProc(TEXT("cmd.exe"), *CmdString, false, false, true, nullptr, 0, nullptr, nullptr);
+#endif
 
             if (ProcessHandle.IsValid())
             {
