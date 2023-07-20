@@ -1,4 +1,4 @@
-# Unreal FFmpeg (UNOFFICIAL)
+# Unreal FFmpeg
 
 A simple plugin to allow media utility in blueprints using FFmpeg.
 
