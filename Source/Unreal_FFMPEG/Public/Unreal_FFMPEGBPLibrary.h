@@ -105,7 +105,8 @@ public:
         Resolution(F2DInt()),
         Codec(ECodec::Copy),
         FPS(0.0f),
-        Audio_HZ(0.0f)
+        Audio_HZ(0.0f),
+        Audio_Bitrate(0.0f)
     {
     }
 
@@ -132,6 +133,9 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Audio Hz"))
         float Audio_HZ;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Audio Bitrate"))
+        float Audio_Bitrate;
 };
 
 

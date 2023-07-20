@@ -43,6 +43,7 @@ FFmpegInfo ExtractMediaInfo(const FString& FilePath)
     std::regex videoEncoderPattern(R"(Video: (\w+) )");
     std::regex fpsPattern(R"(\d+ fps, (\d+) tbr)");
     std::regex audioHzPattern(R"(Audio: .+ (\d+) Hz)");
+    std::regex audioBitratePattern(R"(Audio: .+, (\d+) kb/s)");
 
     std::smatch match;
 
@@ -118,6 +119,12 @@ FFmpegInfo ExtractMediaInfo(const FString& FilePath)
     if (std::regex_search(FileString, match, audioHzPattern))
     {
         MediaInfo.Audio_HZ = FCString::Atof(UTF8_TO_TCHAR(match[1].str().c_str()));
+    }
+
+    // Search for the audio bitrate
+    if (std::regex_search(FileString, match, audioBitratePattern))
+    {
+        MediaInfo.Audio_Bitrate = FCString::Atof(UTF8_TO_TCHAR(match[1].str().c_str()));
     }
 
     return MediaInfo;
