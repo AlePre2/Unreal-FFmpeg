@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Unreal_FFMPEG",
+	"Description": "A simple plugin to allow media utility in blueprints",
+	"Category": "Media",
+	"CreatedBy": "Alessandro Pregnolato",
+	"CreatedByURL": "pregnolatoalessandro.com",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "pregnolatoalessandro.com",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "Unreal_FFMPEG",
+			"Type": "Runtime",
+			"LoadingPhase": "PreLoadingScreen"
+		}
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.Unreal_FFMPEG.cpp.obj": [
+			"Unreal_FFMPEG.init.gen.cpp.obj",
+			"Unreal_FFMPEGBPLibrary.gen.cpp.obj",
+			"Unreal_FFMPEG.cpp.obj",
+			"Unreal_FFMPEGBPLibrary.cpp.obj"
+		]
+	}
+}
